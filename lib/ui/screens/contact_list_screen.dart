@@ -1,8 +1,5 @@
-
 import 'package:flutter/material.dart';
 import '../entity/entity_class.dart';
-
-
 
 class ContactListScreen extends StatefulWidget {
   const ContactListScreen({super.key});
@@ -16,11 +13,15 @@ class _ContactListScreenState extends State<ContactListScreen> {
   final TextEditingController _numberTEController = TextEditingController();
   final GlobalKey<FormState> _globalKey = GlobalKey<FormState>();
   List contactList = [];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Contact List', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
+        title: const Text(
+          'Contact List',
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        ),
         centerTitle: true,
       ),
       body: Padding(
@@ -35,14 +36,15 @@ class _ContactListScreenState extends State<ContactListScreen> {
                   hintText: 'Name',
                 ),
                 validator: (String? value) {
-                  if(value?.trim().isEmpty == true){
+                  if (value?.trim().isEmpty == true) {
                     return 'Write your name';
                   }
                   return null;
                 },
-          
               ),
-              const SizedBox(height: 10,),
+              const SizedBox(
+                height: 10,
+              ),
               TextFormField(
                 controller: _numberTEController,
                 keyboardType: TextInputType.number,
@@ -50,47 +52,46 @@ class _ContactListScreenState extends State<ContactListScreen> {
                   hintText: 'Number',
                 ),
                 validator: (String? value) {
-                  if(value?.trim().isEmpty == true){
+                  if (value?.trim().isEmpty == true) {
                     return 'Write your number';
                   }
                   return null;
                 },
-          
               ),
-              const SizedBox(height: 10,),
-              ElevatedButton(onPressed: () {
-                if(_globalKey.currentState!.validate()){
-                  _addContactItem();
-                  if(mounted){
-                    setState(() {});
-                  }
-
-                }
-                _getTextFieldClear();
-          
-              }, child: const Text('Add')),
-              const SizedBox(height: 16,),
+              const SizedBox(
+                height: 10,
+              ),
+              ElevatedButton(
+                  onPressed: () {
+                    if (_globalKey.currentState!.validate()) {
+                      _addContactItem();
+                      if (mounted) {
+                        setState(() {});
+                      }
+                    }
+                    _getTextFieldClear();
+                  },
+                  child: const Text('Add')),
+              const SizedBox(
+                height: 16,
+              ),
               Expanded(
-                 child: ListView.builder(
-                   itemCount: contactList.length,
-                   primary: false,
-                   shrinkWrap: true,
-                   itemBuilder: (context, index) {
-                     return Card(
-                       shape: RoundedRectangleBorder(
-                         borderRadius: BorderRadius.circular(4)
-                       ),
-                       child: _buildListTile(contactList[index], index),
-                     );
-                   },
-                 )
-
-              ),
+                  child: ListView.builder(
+                itemCount: contactList.length,
+                primary: false,
+                shrinkWrap: true,
+                itemBuilder: (context, index) {
+                  return Card(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(4)),
+                    child: _buildListTile(contactList[index], index),
+                  );
+                },
+              )),
             ],
           ),
         ),
       ),
-
     );
   }
 
@@ -121,23 +122,22 @@ class _ContactListScreenState extends State<ContactListScreen> {
     );
   }
 
-  void _addContactItem(){
+  void _addContactItem() {
     Contact contact = Contact(
-        name: _nameTEController.text,
-        number: _numberTEController.text,
+      name: _nameTEController.text,
+      number: _numberTEController.text,
     );
     contactList.add(contact);
-
   }
-  void _deleteItem(index){
-    contactList.removeAt(index);
-    if(mounted){
-      setState(() {
 
-      });
+  void _deleteItem(index) {
+    contactList.removeAt(index);
+    if (mounted) {
+      setState(() {});
     }
   }
-  void _getTextFieldClear(){
+
+  void _getTextFieldClear() {
     _numberTEController.clear();
     _nameTEController.clear();
   }
